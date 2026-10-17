@@ -66,8 +66,19 @@ export function Topbar({
     router.refresh();
   };
 
-  const displayName = profile?.creator_name || user?.user_metadata?.creator_name || user?.email?.split('@')[0] || 'Creator';
-  const handleName = profile?.handle || (user?.email ? `@${user.email.split('@')[0]}` : '@creator');
+  const displayName =
+    (user
+      ? (profile?.creator_name && profile.creator_name !== 'ApexVortex Gaming' ? profile.creator_name : null) ||
+        user?.user_metadata?.creator_name ||
+        user?.email?.split('@')[0]
+      : profile?.creator_name) || 'Creator';
+
+  const handleName =
+    (user
+      ? (profile?.handle && profile.handle !== '@apexvortex' ? profile.handle : null) ||
+        (user?.user_metadata?.creator_name ? `@${user.user_metadata.creator_name.toLowerCase().replace(/\s+/g, '')}` : null) ||
+        (user?.email ? `@${user.email.split('@')[0]}` : null)
+      : profile?.handle) || '@creator';
   const initial = displayName ? displayName[0].toUpperCase() : 'C';
 
   return (

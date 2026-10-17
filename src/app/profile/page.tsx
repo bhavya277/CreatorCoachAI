@@ -5,6 +5,7 @@ import { AppShell } from '@/components/layout/AppShell';
 import { DataService, DataStore } from '@/lib/data/storage';
 import { CreatorProfile, Game, Platform } from '@/types';
 import { isSupabaseConfigured } from '@/lib/supabase/client';
+import { useAuth } from '@/context/AuthContext';                
 import {
   Settings,
   User,
@@ -34,6 +35,7 @@ const AVAILABLE_GAMES: Game[] = [
 ];
 
 export default function ProfileSettingsPage() {
+  const { refreshProfile } = useAuth();
   const [profile, setProfile] = useState<CreatorProfile | null>(null);
   const [testingOllama, setTestingOllama] = useState(false);
   const [ollamaStatus, setOllamaStatus] = useState<{
@@ -87,6 +89,7 @@ export default function ProfileSettingsPage() {
     e.preventDefault();
     if (!profile) return;
     await DataService.saveProfile(profile);
+    await refreshProfile();
     setSavedNotice(true);
     setTimeout(() => setSavedNotice(false), 2500);
   };

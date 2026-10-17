@@ -31,8 +31,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Fetch or create profile in Supabase public.profiles
   const fetchProfile = async (currentUser: User) => {
+    const defaultName = currentUser.user_metadata?.creator_name || currentUser.email?.split('@')[0] || 'Creator';
+    const defaultHandle = `@${defaultName.toLowerCase().replace(/\s+/g, '')}`;
+
     if (!supabase || !isSupabaseConfigured) {
-      setProfile(SAMPLE_CREATOR_PROFILE);
+      setProfile({
+        ...SAMPLE_CREATOR_PROFILE,
+        id: currentUser.id,
+        creator_name: defaultName,
+        handle: defaultHandle,
+      });
       return;
     }
 
@@ -119,7 +127,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (err) {
       console.error('Profile fetch exception:', err);
-      setProfile(SAMPLE_CREATOR_PROFILE);
+      setProfile({
+        ...SAMPLE_CREATOR_PROFILE,
+        id: currentUser.id,
+        creator_name: defaultName,
+        handle: defaultHandle,
+      });
     }
   };
 
@@ -163,8 +176,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!supabase || !isSupabaseConfigured) {
       return { error: new Error('Supabase is not configured yet. Check NEXT_PUBLIC_SUPABASE_URL and ANON key.') };
     }
+    const cleanEmail = email.trim().toLowerCase();
     const { error } = await supabase.auth.signInWithPassword({
-      email,
+      email: cleanEmail,
       password,
     });
     return { error: error ? new Error(error.message) : null };
@@ -177,12 +191,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user: null,
       };
     }
+    const cleanEmail = email.trim().toLowerCase();
     const { data, error } = await supabase.auth.signUp({
-      email,
+      email: cleanEmail,
       password,
       options: {
         data: {
-          creator_name: creatorName,
+          creator_name: creatorName.trim(),
         },
       },
     });
@@ -207,7 +222,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!supabase || !isSupabaseConfigured) {
       return { error: new Error('Supabase is not configured.') };
     }
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    const cleanEmail = email.trim().toLowerCase();
+    const { error } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
     return { error: error ? new Error(error.message) : null };
