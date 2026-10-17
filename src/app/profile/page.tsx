@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
-import { DataStore } from '@/lib/data/storage';
+import { DataService, DataStore } from '@/lib/data/storage';
 import { CreatorProfile, Game, Platform } from '@/types';
 import { isSupabaseConfigured } from '@/lib/supabase/client';
 import {
@@ -49,9 +49,13 @@ export default function ProfileSettingsPage() {
   const [savedNotice, setSavedNotice] = useState(false);
 
   useEffect(() => {
-    const loaded = DataStore.getProfile();
-    setProfile(loaded);
+    loadProfile();
   }, []);
+
+  const loadProfile = async () => {
+    const loaded = await DataService.getProfile();
+    setProfile(loaded);
+  };
 
   const handleTestOllama = async () => {
     if (!profile) return;
@@ -79,10 +83,10 @@ export default function ProfileSettingsPage() {
     }
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) return;
-    DataStore.saveProfile(profile);
+    await DataService.saveProfile(profile);
     setSavedNotice(true);
     setTimeout(() => setSavedNotice(false), 2500);
   };

@@ -7,7 +7,7 @@ import { CsvImportModal } from '@/components/CsvImportModal';
 import { GameBadge } from '@/components/ui/GameBadge';
 import { PlatformBadge } from '@/components/ui/PlatformBadge';
 import { FormatComparisonChart, PlatformComparisonBars } from '@/components/AnalyticsCharts';
-import { DataStore } from '@/lib/data/storage';
+import { DataService, DataStore } from '@/lib/data/storage';
 import { calculateAnalyticsSummary, calculateEngagementRate } from '@/lib/analytics/calculator';
 import { Video, Game, Platform, ContentFormat, AnalyticsSummary } from '@/types';
 import { formatNumber, formatPercent, formatDate } from '@/lib/utils';
@@ -41,27 +41,31 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     loadVideos();
+    const handleVideoSaved = () => loadVideos();
+    window.addEventListener('creatorcoach_video_saved', handleVideoSaved);
+    return () => window.removeEventListener('creatorcoach_video_saved', handleVideoSaved);
   }, []);
 
-  const loadVideos = () => {
-    setVideos(DataStore.getVideos());
+  const loadVideos = async () => {
+    const loaded = await DataService.getVideos();
+    setVideos(loaded);
   };
 
-  const handleSaveVideo = (savedVideo: Video) => {
-    const updated = DataStore.saveVideo(savedVideo);
-    setVideos(updated);
+  const handleSaveVideo = async (savedVideo: Video) => {
+    await DataService.saveVideo(savedVideo);
+    await loadVideos();
   };
 
-  const handleDeleteVideo = (id: string) => {
-    if (confirm('Delete this video record from your catalog?')) {
-      const updated = DataStore.deleteVideo(id);
-      setVideos(updated);
+  const handleDeleteVideo = async (id: string) => {
+    if (confirm('Delete this video record from your catalog? This action cannot be undone.')) {
+      await DataService.deleteVideo(id);
+      await loadVideos();
     }
   };
 
-  const handleImportSuccess = (importedVideos: Video[]) => {
-    const updated = DataStore.importVideos(importedVideos);
-    setVideos(updated);
+  const handleImportSuccess = async (importedVideos: Video[]) => {
+    await DataService.importVideos(importedVideos);
+    await loadVideos();
   };
 
   const filteredVideos = useMemo(() => {

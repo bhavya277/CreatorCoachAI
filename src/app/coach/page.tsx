@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { AppShell } from '@/components/layout/AppShell';
 import { GameBadge } from '@/components/ui/GameBadge';
 import { PlatformBadge } from '@/components/ui/PlatformBadge';
-import { DataStore } from '@/lib/data/storage';
+import { DataService, DataStore } from '@/lib/data/storage';
 import { CoachingReport, Video, CreatorProfile, ContentIdea } from '@/types';
 import {
   Sparkles,
@@ -40,10 +40,14 @@ export default function CoachPage() {
     loadData();
   }, []);
 
-  const loadData = () => {
+  const loadData = async () => {
+    const [loadedVideos, loadedProfile] = await Promise.all([
+      DataService.getVideos(),
+      DataService.getProfile(),
+    ]);
+    setVideos(loadedVideos);
+    setProfile(loadedProfile);
     setReport(DataStore.getLatestReport());
-    setProfile(DataStore.getProfile());
-    setVideos(DataStore.getVideos());
   };
 
   const handleGenerateReport = async (useDemo: boolean = false) => {
@@ -82,7 +86,7 @@ export default function CoachPage() {
     }
   };
 
-  const handlePushExperimentToPlanner = (exp: {
+  const handlePushExperimentToPlanner = async (exp: {
     title: string;
     game: string;
     format: string;
@@ -100,10 +104,10 @@ export default function CoachPage() {
       objective: 'Validate coach experiment target metric',
       hypothesis_to_test: exp.hypothesis,
       status: 'Idea',
-      created_at: '2026-10-17T12:00:00.000Z',
+      created_at: new Date().toISOString(),
     };
 
-    DataStore.saveContentIdea(idea);
+    await DataService.saveContentIdea(idea);
     setSavedSuccessNotice(`Added "${exp.title}" directly to your Weekly Content Planner!`);
     setTimeout(() => setSavedSuccessNotice(null), 3000);
   };

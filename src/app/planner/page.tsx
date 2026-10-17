@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
-import { DataStore } from '@/lib/data/storage';
+import { DataService, DataStore } from '@/lib/data/storage';
 import { ContentIdea, IdeaStatus, Game, Platform, ContentFormat } from '@/types';
 import { formatNumber, formatPercent } from '@/lib/utils';
 import { GameBadge } from '@/components/ui/GameBadge';
@@ -76,22 +76,26 @@ export default function PlannerPage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
-    const loaded = DataStore.getWeeklyPlan();
-    setIdeas(loaded);
+    loadIdeas();
   }, []);
 
-  const handleUpdateStatus = (id: string, newStatus: IdeaStatus) => {
+  const loadIdeas = async () => {
+    const loaded = await DataService.getWeeklyPlan();
+    setIdeas(loaded);
+  };
+
+  const handleUpdateStatus = async (id: string, newStatus: IdeaStatus) => {
     const current = ideas.find((i) => i.id === id);
     if (!current) return;
     const updatedIdea = { ...current, status: newStatus };
-    const updatedList = DataStore.saveContentIdea(updatedIdea);
-    setIdeas(updatedList);
+    await DataService.saveContentIdea(updatedIdea);
+    await loadIdeas();
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Delete this video idea from your sprint?')) {
-      const updated = DataStore.deleteContentIdea(id);
-      setIdeas(updated);
+  const handleDelete = async (id: string) => {
+    if (confirm('Delete this video idea from your sprint? This action cannot be undone.')) {
+      await DataService.deleteContentIdea(id);
+      await loadIdeas();
     }
   };
 
@@ -100,8 +104,10 @@ export default function PlannerPage() {
     setErrorNotice(null);
 
     try {
-      const profile = DataStore.getProfile();
-      const videos = DataStore.getVideos();
+      const [profile, videos] = await Promise.all([
+        DataService.getProfile(),
+        DataService.getVideos(),
+      ]);
 
       const res = await fetch('/api/ai/planner', {
         method: 'POST',
@@ -112,6 +118,7 @@ export default function PlannerPage() {
           endpoint: profile.ai_model_config.endpoint,
           model: profile.ai_model_config.model,
           useDemoFallback: useDemo,
+          saveToDatabase: true,
         }),
       });
 
@@ -122,9 +129,7 @@ export default function PlannerPage() {
             'Could not generate plan with Ollama. Click "Sample Concepts" for instant demo concepts.'
         );
       } else {
-        const combined = [...data.ideas, ...ideas];
-        DataStore.saveWeeklyPlan(combined);
-        setIdeas(combined);
+        await loadIdeas();
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Error';
@@ -134,9 +139,9 @@ export default function PlannerPage() {
     }
   };
 
-  const handleSaveModal = (updated: ContentIdea) => {
-    const saved = DataStore.saveContentIdea(updated);
-    setIdeas(saved);
+  const handleSaveModal = async (updated: ContentIdea) => {
+    await DataService.saveContentIdea(updated);
+    await loadIdeas();
     setIsEditModalOpen(false);
   };
 

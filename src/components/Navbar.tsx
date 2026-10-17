@@ -127,13 +127,21 @@ export function Navbar({ onOpenAddModal }: NavbarProps) {
           )}
 
           {isLanding && (
-            <Link
-              href="/dashboard"
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-4 py-1.5 rounded-lg shadow-md shadow-purple-600/20 transition-all"
-            >
-              <Gamepad2 className="w-4 h-4" />
-              <span>Launch App</span>
-            </Link>
+            <div className="hidden sm:flex items-center gap-2">
+              <Link
+                href="/login"
+                className="px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white px-4 py-1.5 rounded-xl shadow-md shadow-violet-600/20 transition-all cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Get Started</span>
+              </Link>
+            </div>
           )}
 
           {/* Mobile hamburger button */}

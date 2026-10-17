@@ -39,6 +39,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+import { AuthProvider } from '@/context/AuthContext';
+
 export default function RootLayout({
   children,
 }: {
@@ -49,8 +51,8 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#090b10] text-slate-100 selection:bg-purple-500/30">
-        {children}
+      <body className="min-h-full flex flex-col bg-[#06070a] text-slate-100 selection:bg-violet-500/30">
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

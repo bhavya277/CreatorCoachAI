@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { z } from 'zod';
 import { Game, Platform, ContentFormat } from '@/types';
 
@@ -59,7 +60,6 @@ export async function POST(req: NextRequest) {
       const parsed = VideoImportSchema.safeParse(rawRow);
       if (parsed.success) {
         validatedVideos.push({
-          id: `imp-${Date.now()}-${i + 1}`,
           ...parsed.data,
         });
       } else {
@@ -70,12 +70,61 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    if (validatedVideos.length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'No valid video rows could be parsed.',
+          failedCount: errors.length,
+          errors: errors.slice(0, 10),
+        },
+        { status: 400 }
+      );
+    }
+
+    // Check if user is authenticated with Supabase to persist directly
+    const supabase = await createServerSupabaseClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    let persistedVideos = [];
+
+    if (user) {
+      const recordsToInsert = validatedVideos.map((v) => ({
+        user_id: user.id,
+        title: v.title,
+        game: v.game,
+        platform: v.platform,
+        content_format: v.content_format,
+        published_at: v.published_at,
+        duration_seconds: v.duration_seconds,
+        views: v.views,
+        likes: v.likes,
+        comments: v.comments,
+        shares: v.shares,
+        retention_rate_pct: v.retention_rate_pct,
+        notes: v.notes,
+      }));
+
+      const { data: inserted, error: insertError } = await supabase
+        .from('videos')
+        .insert(recordsToInsert)
+        .select();
+
+      if (insertError) {
+        console.error('Supabase batch import error:', insertError);
+      } else {
+        persistedVideos = inserted || [];
+      }
+    }
+
     return NextResponse.json({
       success: true,
       importedCount: validatedVideos.length,
       failedCount: errors.length,
-      videos: validatedVideos,
-      errors: errors.slice(0, 10), // Limit error payload preview
+      videos: persistedVideos.length > 0 ? persistedVideos : validatedVideos.map((v, i) => ({ id: `imp-${Date.now()}-${i + 1}`, ...v })),
+      errors: errors.slice(0, 10),
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Import failed';
