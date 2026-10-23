@@ -42,9 +42,9 @@ export function FormatComparisonChart({ data, baselineViews }: FormatChartProps)
   }));
 
   return (
-    <div className="w-full h-72">
+    <div className="w-full h-64 sm:h-72">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 20 }}>
+        <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
           <XAxis
             dataKey="name"
@@ -116,9 +116,9 @@ export function PerformanceTrendChart({ data }: TrendChartProps) {
   }));
 
   return (
-    <div className="w-full h-72">
+    <div className="w-full h-64 sm:h-72">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 20 }}>
+        <LineChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
           <XAxis
             dataKey="date"

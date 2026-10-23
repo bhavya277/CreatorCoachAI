@@ -113,9 +113,9 @@ export default function StudioPage() {
     <AppShell>
       <div className="space-y-8 text-left">
         {/* Header */}
-        <div className="p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="p-4 sm:p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-purple-400">
                 Short-Form Video Production
               </span>
@@ -132,10 +132,10 @@ export default function StudioPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full md:w-auto">
             <button
               onClick={() => handleGenerate(true)}
-              className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] text-slate-200 hover:text-white transition-all"
+              className="w-full md:w-auto px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] text-slate-200 hover:text-white transition-all text-center"
             >
               Generate Instant Script
             </button>
@@ -170,7 +170,7 @@ export default function StudioPage() {
         {/* Studio Workspace */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left: Configuration Panel (5 cols) */}
-          <div className="lg:col-span-5 p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-5 h-fit">
+          <div className="lg:col-span-5 p-4 sm:p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-5 h-fit">
             <div className="flex items-center gap-2 pb-3 border-b border-white/[0.08]">
               <Sliders className="w-4 h-4 text-purple-400" />
               <h2 className="text-sm font-bold uppercase tracking-wider text-white">
@@ -263,7 +263,7 @@ export default function StudioPage() {
             </div>
 
             {/* Tone & Length */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1.5">Tone</label>
                 <select
@@ -349,17 +349,17 @@ export default function StudioPage() {
             ) : (
               <div className="space-y-6 animate-in fade-in duration-300">
                 {/* Script Bar Controls */}
-                <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                  <div className="flex items-center gap-2 text-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
                     <GameBadge game={generatedScript.game} />
                     <span className="font-semibold text-white">{generatedScript.content_format}</span>
                     <span className="text-slate-500">•</span>
                     <span className="text-purple-400 font-mono font-semibold">{generatedScript.video_length}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                     <button
                       onClick={handleSaveToWeeklyPlanner}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/40 text-purple-200 transition-all"
+                      className="flex-1 sm:flex-initial justify-center flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/40 text-purple-200 transition-all"
                     >
                       <CalendarDays className="w-3.5 h-3.5 text-cyan-300" />
                       <span>Save to Planner</span>
@@ -371,7 +371,7 @@ export default function StudioPage() {
                           'all'
                         )
                       }
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 transition-all"
+                      className="flex-1 sm:flex-initial justify-center flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 transition-all"
                     >
                       {copiedField === 'all' ? (
                         <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -384,7 +384,7 @@ export default function StudioPage() {
                 </div>
 
                 {/* 3 Alternative Hooks */}
-                <div className="p-5 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-3">
+                <div className="p-4 sm:p-5 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-3">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-purple-400" />
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider">
@@ -421,7 +421,7 @@ export default function StudioPage() {
                 </div>
 
                 {/* Voiceover Script */}
-                <div className="p-5 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-3">
+                <div className="p-4 sm:p-5 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Film className="w-4 h-4 text-indigo-400" />
@@ -448,7 +448,7 @@ export default function StudioPage() {
                 </div>
 
                 {/* Scene Outline */}
-                <div className="p-5 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-3">
+                <div className="p-4 sm:p-5 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-3">
                   <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
                     <Layers className="w-4 h-4 text-cyan-400" />
                     <span>Scene-by-Scene Visual Outline</span>
@@ -458,17 +458,17 @@ export default function StudioPage() {
                     {generatedScript.scene_outline.map((scene) => (
                       <div
                         key={scene.scene_num}
-                        className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs grid grid-cols-12 gap-3"
+                        className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs grid grid-cols-1 sm:grid-cols-12 gap-2.5 sm:gap-3"
                       >
-                        <div className="col-span-2 text-cyan-400 font-mono font-bold">
-                          Scene {scene.scene_num}
-                          <div className="text-[10px] text-slate-500 font-normal">{scene.duration_estimate}</div>
+                        <div className="sm:col-span-2 text-cyan-400 font-mono font-bold flex sm:block items-center justify-between">
+                          <span>Scene {scene.scene_num}</span>
+                          <span className="text-[10px] text-slate-500 font-normal sm:block">{scene.duration_estimate}</span>
                         </div>
-                        <div className="col-span-5 text-slate-300">
+                        <div className="sm:col-span-5 text-slate-300">
                           <strong className="text-white block text-[11px] mb-0.5">Visual:</strong>
                           {scene.visual}
                         </div>
-                        <div className="col-span-5 text-slate-400 border-l border-white/[0.06] pl-3">
+                        <div className="sm:col-span-5 text-slate-400 sm:border-l border-white/[0.06] sm:pl-3 pt-2 sm:pt-0 border-t sm:border-t-0">
                           <strong className="text-slate-200 block text-[11px] mb-0.5">Spoken:</strong>
                           "{scene.audio_speech}"
                         </div>

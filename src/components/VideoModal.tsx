@@ -91,33 +91,33 @@ export function VideoModal({ isOpen, onClose, onSave, initialVideo }: VideoModal
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-[#11141e] border border-white/[0.12] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-2xl bg-[#11141e] border border-white/[0.12] rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.08] bg-[#0c0f17]">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.08] bg-[#0c0f17]">
+          <div className="flex items-center gap-2.5 min-w-0 pr-2">
+            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 shrink-0">
               <Gamepad2 className="w-5 h-5" />
             </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">
+            <div className="min-w-0">
+              <h2 className="text-base sm:text-lg font-bold text-white truncate">
                 {initialVideo ? 'Edit Gaming Video' : 'Add Gaming Video'}
               </h2>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-400 truncate hidden xs:block">
                 Track views, engagements, and gameplay formats for deterministic analytics.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-4 text-sm flex-1">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 overflow-y-auto space-y-4 text-sm flex-1">
           {/* Title */}
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
@@ -365,17 +365,17 @@ export function VideoModal({ isOpen, onClose, onSave, initialVideo }: VideoModal
           </div>
 
           {/* Footer actions */}
-          <div className="pt-3 border-t border-white/[0.08] flex items-center justify-end gap-3">
+          <div className="pt-3 border-t border-white/[0.08] flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-2.5 sm:gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-slate-400 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] transition-colors"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs sm:text-sm text-slate-400 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] transition-colors text-center"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 transition-all"
+              className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 transition-all text-center"
             >
               <Check className="w-4 h-4" />
               <span>{initialVideo ? 'Save Changes' : 'Add Video'}</span>

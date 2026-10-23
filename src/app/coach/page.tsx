@@ -122,9 +122,9 @@ export default function CoachPage() {
     <AppShell onVideoAdded={() => loadData()}>
       <div className="space-y-8 text-left">
         {/* Header Banner */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 sm:p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl">
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-purple-400">
                 Open-Weight AI Growth Engine
               </span>
@@ -141,11 +141,11 @@ export default function CoachPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto shrink-0">
             <button
               onClick={() => handleGenerateReport(false)}
               disabled={isLoading}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 disabled:opacity-50 transition-all hover:scale-[1.02]"
+              className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 disabled:opacity-50 transition-all hover:scale-[1.02]"
             >
               {isLoading ? (
                 <>
@@ -163,7 +163,7 @@ export default function CoachPage() {
             <button
               onClick={() => handleGenerateReport(true)}
               disabled={isLoading}
-              className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] text-slate-200 hover:text-white transition-all"
+              className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] text-slate-200 hover:text-white transition-all text-center"
             >
               Load Verified Demo Report
             </button>
@@ -411,7 +411,7 @@ export default function CoachPage() {
 
                     <button
                       onClick={() => handlePushExperimentToPlanner(exp)}
-                      className="shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 transition-all"
+                      className="w-full md:w-auto shrink-0 flex items-center justify-center gap-1.5 px-3.5 py-2 md:py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 transition-all cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Add to Planner</span>
@@ -423,9 +423,9 @@ export default function CoachPage() {
 
             {/* Data Quality Notes */}
             {report.data_quality_notes && (
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs text-slate-400 flex items-center justify-between">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs text-slate-400 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <span>Data Quality Note: {report.data_quality_notes}</span>
-                <span className="text-purple-400 font-mono">
+                <span className="text-purple-400 font-mono text-[11px] shrink-0">
                   {videos.length} videos analyzed
                 </span>
               </div>

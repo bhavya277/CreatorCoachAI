@@ -119,10 +119,11 @@ export function Navbar({ onOpenAddModal }: NavbarProps) {
           {onOpenAddModal && (
             <button
               onClick={onOpenAddModal}
-              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-3.5 py-1.5 rounded-lg shadow-md shadow-purple-600/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-2.5 sm:px-3.5 py-1.5 rounded-lg shadow-md shadow-purple-600/20 transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0"
             >
-              <Plus className="w-4 h-4" />
-              <span>Add Video</span>
+              <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Add Video</span>
+              <span className="xs:hidden">Add</span>
             </button>
           )}
 
@@ -157,38 +158,58 @@ export function Navbar({ onOpenAddModal }: NavbarProps) {
 
       {/* Mobile Menu dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-white/[0.08] bg-[#0c0f17] px-4 pt-3 pb-4 space-y-1">
-          {navLinks.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium ${
-                  isActive
-                    ? 'text-white bg-purple-600/20 border border-purple-500/30'
-                    : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
-                }`}
-              >
-                <div className="flex items-center gap-2.5">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-purple-400' : 'text-slate-400'}`} />
-                  <span>{item.label}</span>
-                </div>
-                {item.badge && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-semibold border border-purple-500/30">
-                    {item.badge}
-                  </span>
-                )}
-              </Link>
-            );
-          })}
+        <div className="md:hidden border-b border-white/[0.08] bg-[#0c0f17] px-4 pt-3 pb-5 space-y-2 animate-in fade-in duration-200">
+          <div className="space-y-1">
+            {navLinks.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'text-white bg-purple-600/20 border border-purple-500/30'
+                      : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-purple-400' : 'text-slate-400'}`} />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-semibold border border-purple-500/30">
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
 
-          <div className="pt-2 border-t border-white/[0.08] flex items-center justify-between">
+          <div className="pt-3 border-t border-white/[0.08] space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-xs font-semibold text-slate-200 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-xs font-semibold text-white shadow-md shadow-violet-600/25 transition-all"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+                <span>Get Started</span>
+              </Link>
+            </div>
+
             <button
               onClick={handleResetDemo}
-              className="text-xs text-slate-400 hover:text-purple-300 flex items-center gap-1.5 py-1"
+              className="w-full text-xs text-slate-400 hover:text-purple-300 flex items-center justify-center gap-1.5 py-1.5"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset Sample Gaming Data</span>

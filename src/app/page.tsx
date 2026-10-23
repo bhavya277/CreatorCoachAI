@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
 import { GameBadge } from '@/components/ui/GameBadge';
@@ -27,9 +27,12 @@ import {
   Play,
   RotateCcw,
   Check,
+  Menu,
+  X,
 } from 'lucide-react';
 
 export default function LandingPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const faqs = [
     {
       q: 'Why build specifically for gaming short-form creators?',
@@ -56,11 +59,11 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#06070a] text-slate-100 flex flex-col selection:bg-purple-500/30 overflow-x-hidden">
       {/* Sticky Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#06070a]/85 backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#06070a]/90 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Logo size="md" />
 
-          {/* Nav links */}
+          {/* Desktop Nav links */}
           <nav className="hidden md:flex items-center gap-8 text-xs font-semibold text-slate-300">
             <a href="#features" className="hover:text-purple-300 transition-colors">
               Features
@@ -77,29 +80,91 @@ export default function LandingPage() {
           </nav>
 
           {/* Action CTAs */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
-              href="/dashboard"
-              className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 transition-colors"
+              href="/login"
+              className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 transition-colors hidden xs:inline-block"
             >
               Sign In
             </Link>
             <Link
-              href="/dashboard"
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:opacity-90 text-white shadow-lg shadow-purple-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              href="/signup"
+              className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:opacity-90 text-white shadow-lg shadow-purple-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>Get Started</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] cursor-pointer"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-b border-white/[0.08] bg-[#090b10] px-4 pt-3 pb-5 space-y-3 animate-in fade-in duration-200">
+            <div className="space-y-1">
+              <a
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-white/[0.05]"
+              >
+                Features
+              </a>
+              <a
+                href="#how-it-works"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-white/[0.05]"
+              >
+                How It Works
+              </a>
+              <a
+                href="#pricing"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-white/[0.05]"
+              >
+                Pricing
+              </a>
+              <a
+                href="#faq"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-white/[0.05]"
+              >
+                FAQ
+              </a>
+            </div>
+
+            <div className="pt-3 border-t border-white/[0.08] grid grid-cols-2 gap-2">
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-center py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] text-xs font-semibold text-slate-200 border border-white/[0.08]"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-center py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-xs font-semibold text-white shadow-md shadow-purple-600/25"
+              >
+                Get Started
+              </Link>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Section: Two-Column Layout */}
-      <section className="relative pt-16 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <section className="relative pt-12 sm:pt-16 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full overflow-hidden">
         {/* Ambient atmospheric glows */}
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-[500px] h-[350px] bg-purple-600/15 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute top-1/3 right-1/4 w-[450px] h-[300px] bg-cyan-600/10 blur-[130px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-full max-w-[500px] h-[350px] bg-purple-600/15 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/3 right-1/4 w-full max-w-[450px] h-[300px] bg-cyan-600/10 blur-[130px] rounded-full pointer-events-none" />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Copy & CTAs */}
@@ -172,21 +237,21 @@ export default function LandingPage() {
               </div>
 
               {/* 3 Mini Metric Panels */}
-              <div className="grid grid-cols-3 gap-2.5 text-left">
-                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <span className="text-[10px] font-semibold text-slate-400 block uppercase">Views</span>
-                  <span className="text-base sm:text-lg font-black text-white">528.9K</span>
-                  <span className="text-[10px] text-emerald-400 block font-medium">+34% reach</span>
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 text-left">
+                <div className="p-2 sm:p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <span className="text-[9px] sm:text-[10px] font-semibold text-slate-400 block uppercase">Views</span>
+                  <span className="text-sm sm:text-lg font-black text-white truncate block">528.9K</span>
+                  <span className="text-[9px] sm:text-[10px] text-emerald-400 block font-medium truncate">+34% reach</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <span className="text-[10px] font-semibold text-slate-400 block uppercase">Eng. Rate</span>
-                  <span className="text-base sm:text-lg font-black text-white">9.2%</span>
-                  <span className="text-[10px] text-cyan-400 block font-medium">Valid denom.</span>
+                <div className="p-2 sm:p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <span className="text-[9px] sm:text-[10px] font-semibold text-slate-400 block uppercase">Eng. Rate</span>
+                  <span className="text-sm sm:text-lg font-black text-white truncate block">9.2%</span>
+                  <span className="text-[9px] sm:text-[10px] text-cyan-400 block font-medium truncate">Valid denom.</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <span className="text-[10px] font-semibold text-slate-400 block uppercase">Avg Baseline</span>
-                  <span className="text-base sm:text-lg font-black text-white">29.4K</span>
-                  <span className="text-[10px] text-purple-400 block font-medium">18 clips</span>
+                <div className="p-2 sm:p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <span className="text-[9px] sm:text-[10px] font-semibold text-slate-400 block uppercase">Baseline</span>
+                  <span className="text-sm sm:text-lg font-black text-white truncate block">29.4K</span>
+                  <span className="text-[9px] sm:text-[10px] text-purple-400 block font-medium truncate">18 clips</span>
                 </div>
               </div>
 
@@ -637,14 +702,14 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-white/[0.08] bg-[#050608] py-12 px-4 sm:px-6 lg:px-8">
+      <footer className="mt-auto border-t border-white/[0.08] bg-[#050608] py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-400">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center sm:text-left">
             <Logo size="sm" />
             <span className="text-slate-500">— Open-Weight Growth Coach for Gaming Creators</span>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             <Link href="/dashboard" className="hover:text-purple-300">
               Dashboard
             </Link>

@@ -74,6 +74,7 @@ export default function PlannerPage() {
   // Edit / Record Performance Modal State
   const [selectedIdea, setSelectedIdea] = useState<ContentIdea | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [mobileTab, setMobileTab] = useState<'All' | IdeaStatus>('All');
 
   useEffect(() => {
     loadIdeas();
@@ -227,15 +228,49 @@ export default function PlannerPage() {
           </div>
         )}
 
-        {/* Kanban Board of Video Ideas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-start">
+        {/* Mobile Stage Selector Tabs (Mobile Only) */}
+        <div className="flex md:hidden items-center gap-1.5 overflow-x-auto pb-1 -mx-2 px-2 scrollbar-none">
+          <button
+            onClick={() => setMobileTab('All')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
+              mobileTab === 'All'
+                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
+                : 'bg-white/[0.04] text-slate-400 hover:text-white'
+            }`}
+          >
+            All Stages ({ideas.length})
+          </button>
           {STATUS_COLUMNS.map((col) => {
+            const count = ideas.filter((i) => i.status === col.id).length;
+            const isSelected = mobileTab === col.id;
+            return (
+              <button
+                key={col.id}
+                onClick={() => setMobileTab(col.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                  isSelected
+                    ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
+                    : 'bg-white/[0.04] text-slate-400 hover:text-white'
+                }`}
+              >
+                <span>{col.label.split(' ')[0]}</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/40 font-mono">
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Kanban Board of Video Ideas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 items-start">
+          {STATUS_COLUMNS.filter(col => mobileTab === 'All' || col.id === mobileTab).map((col) => {
             const columnIdeas = ideas.filter((i) => i.status === col.id);
             const ColumnIcon = col.icon;
             return (
               <div
                 key={col.id}
-                className="rounded-2xl glass-panel p-4 flex flex-col space-y-3 min-h-[540px] relative overflow-hidden"
+                className="rounded-2xl glass-panel p-3.5 sm:p-4 flex flex-col space-y-3 min-h-[220px] md:min-h-[540px] relative overflow-hidden"
               >
                 {/* Column Header Glow */}
                 <div
@@ -362,8 +397,8 @@ export default function PlannerPage() {
 
       {/* Edit Idea & Record Performance Modal */}
       {isEditModalOpen && selectedIdea && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-xl bg-[#0f121d] border border-white/[0.12] rounded-2xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in">
+          <div className="relative w-full max-w-xl bg-[#0f121d] border border-white/[0.12] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
               <div>
                 <h3 className="text-base font-bold text-white">
@@ -515,16 +550,16 @@ export default function PlannerPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/[0.08]">
+            <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-white/[0.08]">
               <button
                 onClick={() => setIsEditModalOpen(false)}
-                className="px-4 py-2 rounded-xl text-slate-400 hover:text-white transition-colors"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl text-slate-400 hover:text-white transition-colors text-xs text-center"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleSaveModal(selectedIdea)}
-                className="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 text-white shadow-lg shadow-violet-600/25 hover:from-violet-500 hover:to-cyan-500 transition-all"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 text-white shadow-lg shadow-violet-600/25 hover:from-violet-500 hover:to-cyan-500 transition-all text-center"
               >
                 Save Changes
               </button>

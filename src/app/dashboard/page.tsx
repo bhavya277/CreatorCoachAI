@@ -91,20 +91,20 @@ export default function DashboardPage() {
     <AppShell onVideoAdded={() => loadData()}>
       <div className="space-y-8">
         {/* Welcome Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl glass-panel shadow-xl relative overflow-hidden">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 sm:p-6 rounded-2xl glass-panel shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-violet-600/10 via-cyan-500/5 to-transparent pointer-events-none" />
 
           <div className="space-y-1 relative z-10">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-violet-400">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-violet-400">
                 Creator Dashboard
               </span>
               <span className="text-[10px] text-slate-500">•</span>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-[11px] sm:text-xs text-slate-400 font-mono">
                 {currentDate}
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white">
               Welcome back, {profile?.creator_name || 'Creator'}
             </h1>
             <p className="text-xs sm:text-sm text-slate-400">
@@ -114,55 +114,55 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5 relative z-10">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 relative z-10 w-full md:w-auto">
             <button
               onClick={() => setIsVideoModalOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-white transition-all cursor-pointer"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-white transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4 text-violet-400" />
               <span>Add Clip</span>
             </button>
             <Link
               href="/coach"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-lg shadow-violet-600/25 transition-all hover:scale-[1.02] cursor-pointer"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-lg shadow-violet-600/25 transition-all hover:scale-[1.02] cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-cyan-300" />
-              <span>Analyze My Content</span>
+              <span>Analyze Content</span>
             </Link>
           </div>
         </div>
 
         {/* Empty Catalog Callout if 0 videos */}
         {!hasVideos && !loading && (
-          <div className="p-8 rounded-2xl glass-panel border border-violet-500/30 text-center space-y-4 relative overflow-hidden">
+          <div className="p-5 sm:p-8 rounded-2xl glass-panel border border-violet-500/30 text-center space-y-4 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-96 h-48 bg-gradient-to-bl from-violet-600/15 via-cyan-500/10 to-transparent blur-3xl pointer-events-none" />
             <div className="w-12 h-12 rounded-2xl bg-violet-600/20 border border-violet-500/40 text-violet-300 mx-auto flex items-center justify-center">
               <Film className="w-6 h-6" />
             </div>
             <div className="max-w-md mx-auto space-y-1.5">
-              <h3 className="text-lg font-bold text-white">No Videos in Your Catalog Yet</h3>
+              <h3 className="text-base sm:text-lg font-bold text-white">No Videos in Your Catalog Yet</h3>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Add clips manually or import a CSV export from YouTube Studio / Instagram Insights to calculate real engagement rates and get tailored AI coaching.
               </p>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2.5 sm:gap-3 pt-2">
               <button
                 onClick={() => setIsVideoModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg cursor-pointer hover:from-violet-500 hover:to-indigo-500 transition-all"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg cursor-pointer hover:from-violet-500 hover:to-indigo-500 transition-all"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add First Video</span>
               </button>
               <button
                 onClick={() => setIsCsvModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] text-slate-200 transition-colors cursor-pointer"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] text-slate-200 transition-colors cursor-pointer"
               >
                 <Upload className="w-4 h-4 text-cyan-400" />
                 <span>Import CSV File</span>
               </button>
               <button
                 onClick={handleSeedDemoData}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs text-slate-400 hover:text-white bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.06] transition-colors cursor-pointer"
+                className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs text-slate-400 hover:text-white bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.06] transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Explore with Sample Data</span>
@@ -171,8 +171,8 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* 4 Refined Metric Panels */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* 4 Refined Metric Panels - 2 columns on phone, 4 on desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
           <MetricCard
             title="Total Views"
             value={formatNumber(analytics?.total_views || 0)}
@@ -197,7 +197,7 @@ export default function DashboardPage() {
           <MetricCard
             title="Videos Analyzed"
             value={String(analytics?.total_videos || 0)}
-            subtitle={`${analytics?.videos_with_complete_engagement || 0} with complete metrics`}
+            subtitle={`${analytics?.videos_with_complete_engagement || 0} complete metrics`}
             icon={VideoIcon}
             iconColor="text-cyan-400"
           />
@@ -396,18 +396,18 @@ export default function DashboardPage() {
         </div>
 
         {/* Top Performing Videos Table */}
-        <div className="p-6 rounded-2xl glass-panel space-y-4 shadow-xl">
-          <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+        <div className="p-4 sm:p-6 rounded-2xl glass-panel space-y-4 shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-white/[0.08]">
             <div className="flex items-center gap-2">
-              <Flame className="w-5 h-5 text-amber-400" />
+              <Flame className="w-5 h-5 text-amber-400 shrink-0" />
               <div>
-                <h3 className="text-base font-bold text-white">Top Performing Gaming Clips</h3>
+                <h3 className="text-sm sm:text-base font-bold text-white">Top Performing Gaming Clips</h3>
                 <p className="text-xs text-slate-400">Ranked by authentic view volume and audience engagement</p>
               </div>
             </div>
             <Link
               href="/analytics"
-              className="text-xs font-semibold text-violet-400 hover:text-violet-300 flex items-center gap-1"
+              className="text-xs font-semibold text-violet-400 hover:text-violet-300 flex items-center gap-1 shrink-0"
             >
               <span>View All {videos.length} Videos</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -419,62 +419,115 @@ export default function DashboardPage() {
               <span>No videos uploaded yet to rank.</span>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs sm:text-sm">
-                <thead>
-                  <tr className="border-b border-white/[0.06] text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    <th className="pb-3 pl-2">Rank</th>
-                    <th className="pb-3">Title & Game</th>
-                    <th className="pb-3">Platform</th>
-                    <th className="pb-3">Format</th>
-                    <th className="pb-3 text-right">Views</th>
-                    <th className="pb-3 text-right pr-2">Engagement</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/[0.04]">
-                  {sortedVideos.map((video, idx) => {
-                    const engRate =
-                      video.views > 0 && video.likes !== null && video.comments !== null && video.shares !== null
-                        ? ((video.likes + video.comments + video.shares) / video.views) * 100
-                        : null;
+            <>
+              {/* Mobile View: Vertical Cards (Phones < 640px) */}
+              <div className="sm:hidden space-y-2.5">
+                {sortedVideos.map((video, idx) => {
+                  const engRate =
+                    video.views > 0 && video.likes !== null && video.comments !== null && video.shares !== null
+                      ? ((video.likes + video.comments + video.shares) / video.views) * 100
+                      : null;
 
-                    return (
-                      <tr key={video.id} className="hover:bg-white/[0.02] transition-colors group">
-                        <td className="py-3 pl-2 font-mono font-bold text-slate-500">
-                          {idx === 0 ? (
-                            <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 inline-flex items-center justify-center text-[10px]">
-                              1
-                            </span>
-                          ) : (
-                            `#${idx + 1}`
-                          )}
-                        </td>
-                        <td className="py-3">
-                          <div className="font-semibold text-white group-hover:text-violet-300 transition-colors">
+                  return (
+                    <div
+                      key={video.id}
+                      className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span
+                            className={`w-5 h-5 rounded-full inline-flex items-center justify-center text-[10px] font-mono font-bold shrink-0 ${
+                              idx === 0
+                                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                                : 'bg-white/[0.06] text-slate-400'
+                            }`}
+                          >
+                            {idx + 1}
+                          </span>
+                          <span className="font-semibold text-xs text-white truncate">
                             {video.title}
-                          </div>
-                          <div className="mt-0.5">
-                            <GameBadge game={video.game} />
-                          </div>
-                        </td>
-                        <td className="py-3">
-                          <PlatformBadge platform={video.platform} />
-                        </td>
-                        <td className="py-3">
-                          <span className="text-xs text-slate-400">{video.content_format}</span>
-                        </td>
-                        <td className="py-3 text-right font-mono font-bold text-white">
+                          </span>
+                        </div>
+                        <span className="font-mono font-bold text-xs text-white shrink-0">
                           {formatNumber(video.views)}
-                        </td>
-                        <td className="py-3 text-right pr-2 font-mono font-bold text-violet-400">
-                          {engRate !== null ? formatPercent(engRate) : '—'}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-white/[0.04] text-[11px]">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <GameBadge game={video.game} size="sm" />
+                          <PlatformBadge platform={video.platform} size="sm" />
+                        </div>
+                        <div className="flex items-center gap-2 font-mono">
+                          <span className="text-[10px] text-slate-400">{video.content_format.split('/')[0]}</span>
+                          <span className="font-bold text-violet-400">
+                            {engRate !== null ? formatPercent(engRate) : '—'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Tablet & Desktop View: Structured Table (>= 640px) */}
+              <div className="hidden sm:block overflow-x-auto -mx-2 sm:mx-0 px-2 sm:px-0">
+                <table className="w-full text-left text-xs sm:text-sm min-w-[560px]">
+                  <thead>
+                    <tr className="border-b border-white/[0.06] text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                      <th className="pb-3 pl-2">Rank</th>
+                      <th className="pb-3">Title & Game</th>
+                      <th className="pb-3">Platform</th>
+                      <th className="pb-3">Format</th>
+                      <th className="pb-3 text-right">Views</th>
+                      <th className="pb-3 text-right pr-2">Engagement</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.04]">
+                    {sortedVideos.map((video, idx) => {
+                      const engRate =
+                        video.views > 0 && video.likes !== null && video.comments !== null && video.shares !== null
+                          ? ((video.likes + video.comments + video.shares) / video.views) * 100
+                          : null;
+
+                      return (
+                        <tr key={video.id} className="hover:bg-white/[0.02] transition-colors group">
+                          <td className="py-3 pl-2 font-mono font-bold text-slate-500">
+                            {idx === 0 ? (
+                              <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 inline-flex items-center justify-center text-[10px]">
+                                1
+                              </span>
+                            ) : (
+                              `#${idx + 1}`
+                            )}
+                          </td>
+                          <td className="py-3">
+                            <div className="font-semibold text-white group-hover:text-violet-300 transition-colors">
+                              {video.title}
+                            </div>
+                            <div className="mt-0.5">
+                              <GameBadge game={video.game} />
+                            </div>
+                          </td>
+                          <td className="py-3">
+                            <PlatformBadge platform={video.platform} />
+                          </td>
+                          <td className="py-3">
+                            <span className="text-xs text-slate-400">{video.content_format}</span>
+                          </td>
+                          <td className="py-3 text-right font-mono font-bold text-white">
+                            {formatNumber(video.views)}
+                          </td>
+                          <td className="py-3 text-right pr-2 font-mono font-bold text-violet-400">
+                            {engRate !== null ? formatPercent(engRate) : '—'}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </div>
       </div>

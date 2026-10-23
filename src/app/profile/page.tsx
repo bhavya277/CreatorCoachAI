@@ -118,7 +118,7 @@ export default function ProfileSettingsPage() {
     <AppShell>
       <div className="space-y-6 max-w-5xl mx-auto">
         {/* Header Hero */}
-        <div className="relative overflow-hidden rounded-2xl glass-panel p-6 sm:p-8">
+        <div className="relative overflow-hidden rounded-2xl glass-panel p-4 sm:p-8">
           <div className="absolute top-0 right-0 w-80 h-40 bg-gradient-to-bl from-violet-600/15 via-cyan-500/10 to-transparent blur-2xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -163,7 +163,7 @@ export default function ProfileSettingsPage() {
 
         <form onSubmit={handleSave} className="space-y-6">
           {/* Section 1: Basic Creator Identity */}
-          <div className="p-6 rounded-2xl glass-panel space-y-5">
+          <div className="p-4 sm:p-6 rounded-2xl glass-panel space-y-5">
             <div className="flex items-center gap-2.5 pb-3.5 border-b border-white/[0.08]">
               <div className="p-1.5 rounded-lg bg-violet-500/10 text-violet-400">
                 <User className="w-4 h-4" />
@@ -233,11 +233,11 @@ export default function ProfileSettingsPage() {
               <label className="block text-xs font-semibold text-slate-300 mb-2">
                 Primary Short-Form Platforms
               </label>
-              <div className="flex gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => togglePlatform('youtube_shorts')}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer text-center ${
                     profile.primary_platforms.includes('youtube_shorts')
                       ? 'bg-rose-500/20 border-rose-500/50 text-rose-300'
                       : 'bg-white/[0.03] border-white/[0.08] text-slate-400 hover:text-white hover:bg-white/[0.06]'
@@ -248,7 +248,7 @@ export default function ProfileSettingsPage() {
                 <button
                   type="button"
                   onClick={() => togglePlatform('instagram_reels')}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer text-center ${
                     profile.primary_platforms.includes('instagram_reels')
                       ? 'bg-violet-500/20 border-violet-500/50 text-violet-300'
                       : 'bg-white/[0.03] border-white/[0.08] text-slate-400 hover:text-white hover:bg-white/[0.06]'
@@ -261,7 +261,7 @@ export default function ProfileSettingsPage() {
           </div>
 
           {/* Section 2: Content Strategy & Style */}
-          <div className="p-6 rounded-2xl glass-panel space-y-4">
+          <div className="p-4 sm:p-6 rounded-2xl glass-panel space-y-4">
             <div className="flex items-center gap-2.5 pb-3.5 border-b border-white/[0.08]">
               <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400">
                 <Gamepad2 className="w-4 h-4" />
@@ -329,7 +329,7 @@ export default function ProfileSettingsPage() {
           </div>
 
           {/* Section 3: Weekly Target Goals */}
-          <div className="p-6 rounded-2xl glass-panel space-y-4">
+          <div className="p-4 sm:p-6 rounded-2xl glass-panel space-y-4">
             <div className="flex items-center gap-2.5 pb-3.5 border-b border-white/[0.08]">
               <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
                 <Target className="w-4 h-4" />
@@ -406,7 +406,7 @@ export default function ProfileSettingsPage() {
           </div>
 
           {/* Section 4: Open-Source AI Model Configuration (Ollama) */}
-          <div className="p-6 rounded-2xl glass-panel space-y-4">
+          <div className="p-4 sm:p-6 rounded-2xl glass-panel space-y-4">
             <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
               <div className="flex items-center gap-2.5">
                 <div className="p-1.5 rounded-lg bg-violet-500/10 text-violet-400">
@@ -475,7 +475,7 @@ export default function ProfileSettingsPage() {
                 type="button"
                 onClick={handleTestOllama}
                 disabled={testingOllama}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-slate-200 transition-all cursor-pointer w-fit"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-slate-200 transition-all cursor-pointer w-full sm:w-fit justify-center"
               >
                 <Radio className="w-3.5 h-3.5 text-violet-400" />
                 <span>{testingOllama ? 'Connecting to Ollama...' : 'Test Connection'}</span>
@@ -503,7 +503,7 @@ export default function ProfileSettingsPage() {
           </div>
 
           {/* Section 5: Database Status (Supabase) */}
-          <div className="p-6 rounded-2xl glass-panel space-y-3">
+          <div className="p-4 sm:p-6 rounded-2xl glass-panel space-y-3">
             <div className="flex items-center gap-2.5 pb-3.5 border-b border-white/[0.08]">
               <div className="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400">
                 <Database className="w-4 h-4" />
@@ -538,7 +538,7 @@ export default function ProfileSettingsPage() {
           <div className="flex items-center justify-end gap-3 pt-2">
             <button
               type="submit"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-xl shadow-violet-600/30 transition-all cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-xl shadow-violet-600/30 transition-all cursor-pointer"
             >
               <Save className="w-4 h-4" />
               <span>Save Configuration</span>

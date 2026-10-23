@@ -171,38 +171,38 @@ export function CsvImportModal({ isOpen, onClose, onImportSuccess }: CsvImportMo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-3xl bg-[#11141e] border border-white/[0.12] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-3xl bg-[#11141e] border border-white/[0.12] rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.08] bg-[#0c0f17]">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.08] bg-[#0c0f17]">
+          <div className="flex items-center gap-2.5 min-w-0 pr-2">
+            <div className="p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 shrink-0">
               <FileSpreadsheet className="w-5 h-5" />
             </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">Import Gaming Videos from CSV</h2>
-              <p className="text-xs text-slate-400">
+            <div className="min-w-0">
+              <h2 className="text-base sm:text-lg font-bold text-white truncate">Import Gaming Videos from CSV</h2>
+              <p className="text-xs text-slate-400 truncate hidden xs:block">
                 Upload your export from YouTube Studio or Instagram Insights. Field mapping auto-adapts.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06]"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Content */}
-        <div className="p-6 overflow-y-auto space-y-5 text-sm flex-1">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-5 text-sm flex-1">
           {/* File Upload Zone */}
           {!file ? (
-            <div className="border-2 border-dashed border-white/[0.15] hover:border-purple-500/50 rounded-2xl p-8 text-center flex flex-col items-center justify-center bg-white/[0.01] hover:bg-white/[0.02] transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-3">
-                <Upload className="w-6 h-6" />
+            <div className="border-2 border-dashed border-white/[0.15] hover:border-purple-500/50 rounded-2xl p-4 sm:p-8 text-center flex flex-col items-center justify-center bg-white/[0.01] hover:bg-white/[0.02] transition-colors">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-3">
+                <Upload className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <h3 className="text-base font-semibold text-white mb-1">
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-1">
                 Drag and drop your CSV file, or browse
               </h3>
               <p className="text-xs text-slate-400 max-w-md mb-4">
@@ -219,7 +219,7 @@ export function CsvImportModal({ isOpen, onClose, onImportSuccess }: CsvImportMo
                 />
               </label>
 
-              <div className="mt-6 pt-4 border-t border-white/[0.08] w-full flex items-center justify-center">
+              <div className="mt-5 sm:mt-6 pt-4 border-t border-white/[0.08] w-full flex items-center justify-center">
                 <button
                   type="button"
                   onClick={handleDownloadSampleCsv}
@@ -232,11 +232,11 @@ export function CsvImportModal({ isOpen, onClose, onImportSuccess }: CsvImportMo
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <div className="flex items-center gap-3">
-                  <FileSpreadsheet className="w-5 h-5 text-emerald-400" />
-                  <div>
-                    <p className="text-sm font-semibold text-white">{file.name}</p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                <div className="flex items-center gap-3 min-w-0">
+                  <FileSpreadsheet className="w-5 h-5 text-emerald-400 shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-white truncate">{file.name}</p>
                     <p className="text-xs text-slate-400">
                       {parsedRows.length} rows detected • {previewVideos.length} valid records
                     </p>
@@ -248,18 +248,18 @@ export function CsvImportModal({ isOpen, onClose, onImportSuccess }: CsvImportMo
                     setParsedRows([]);
                     setPreviewVideos([]);
                   }}
-                  className="text-xs text-slate-400 hover:text-rose-400"
+                  className="text-xs text-slate-400 hover:text-rose-400 text-left sm:text-right"
                 >
                   Replace File
                 </button>
               </div>
 
               {/* Field Mapping Configuration */}
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] space-y-3">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] space-y-3">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-purple-400">
                   Column Field Mapping
                 </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                   {Object.entries(fieldMapping).map(([key, colValue]) => (
                     <div key={key}>
                       <label className="block text-[11px] text-slate-400 mb-1 capitalize">
@@ -304,7 +304,7 @@ export function CsvImportModal({ isOpen, onClose, onImportSuccess }: CsvImportMo
                   Preview (First 4 rows):
                 </h4>
                 <div className="overflow-x-auto rounded-xl border border-white/[0.08]">
-                  <table className="w-full text-left text-xs">
+                  <table className="w-full text-left text-xs min-w-[540px]">
                     <thead className="bg-[#0c0f17] text-slate-400 border-b border-white/[0.08]">
                       <tr>
                         <th className="p-2.5">Title</th>
@@ -337,23 +337,23 @@ export function CsvImportModal({ isOpen, onClose, onImportSuccess }: CsvImportMo
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-white/[0.08] bg-[#0c0f17] flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-t border-white/[0.08] bg-[#0c0f17] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="text-xs text-slate-400">
             {previewVideos.length > 0 && `${previewVideos.length} videos ready to import`}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-slate-400 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] transition-colors"
+              className="flex-1 sm:flex-initial px-4 py-2 rounded-xl text-slate-400 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] transition-colors text-center text-xs sm:text-sm"
             >
               Cancel
             </button>
             <button
               disabled={previewVideos.length === 0}
               onClick={handleConfirmImport}
-              className="flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2 rounded-xl font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-xs sm:text-sm"
             >
-              <CheckCircle2 className="w-4 h-4" />
+              <CheckCircle2 className="w-4 h-4 shrink-0" />
               <span>Import {previewVideos.length} Videos</span>
             </button>
           </div>

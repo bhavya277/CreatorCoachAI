@@ -16,6 +16,7 @@ import {
   ChevronRight,
   RotateCcw,
   Zap,
+  X,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -57,14 +58,14 @@ export function Sidebar({
 
       {/* Main Sidebar Shell */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col bg-[#0a0d14] border-r border-white/[0.08] transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col bg-[#0a0d14] border-r border-white/[0.08] transition-all duration-300 ease-in-out shadow-2xl ${
           collapsed ? 'w-20' : 'w-64'
         } ${
-          mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          mobileOpen ? 'translate-x-0 w-72 max-w-[85vw]' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         {/* Brand Header */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-white/[0.06]">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-white/[0.06] shrink-0">
           <Logo size={collapsed ? 'sm' : 'md'} showText={!collapsed} />
 
           {/* Desktop Collapse Toggle */}
@@ -78,6 +79,15 @@ export function Sidebar({
             ) : (
               <ChevronLeft className="w-4 h-4" />
             )}
+          </button>
+
+          {/* Mobile Close Button */}
+          <button
+            onClick={onCloseMobile}
+            aria-label="Close sidebar"
+            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors cursor-pointer"
+          >
+            <X className="w-5 h-5" />
           </button>
         </div>
 
@@ -97,7 +107,7 @@ export function Sidebar({
                 href={item.href}
                 onClick={onCloseMobile}
                 title={collapsed ? item.label : undefined}
-                className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all duration-200 group ${
+                className={`relative flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-xl font-medium text-xs sm:text-sm transition-all duration-200 group ${
                   isActive
                     ? 'bg-purple-600/15 text-white font-semibold shadow-inner'
                     : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.04]'
@@ -132,7 +142,7 @@ export function Sidebar({
         </nav>
 
         {/* Footer info & demo reset */}
-        <div className="p-3 border-t border-white/[0.06] space-y-2">
+        <div className="p-3 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] border-t border-white/[0.06] space-y-2 shrink-0">
           {!collapsed ? (
             <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2">
               <div className="flex items-center justify-between text-xs">
@@ -145,7 +155,7 @@ export function Sidebar({
               {onResetDemo && (
                 <button
                   onClick={onResetDemo}
-                  className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[11px] font-semibold text-slate-400 hover:text-purple-300 bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] transition-colors"
+                  className="w-full flex items-center justify-center gap-1.5 py-2 min-h-[38px] rounded-lg text-[11px] font-semibold text-slate-400 hover:text-purple-300 bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] transition-colors cursor-pointer"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset Sample Data</span>
@@ -157,7 +167,7 @@ export function Sidebar({
               <button
                 onClick={onResetDemo}
                 title="Reset Sample Data"
-                className="w-full p-2.5 rounded-xl text-slate-400 hover:text-purple-300 hover:bg-white/[0.05] flex items-center justify-center transition-colors"
+                className="w-full p-2.5 rounded-xl text-slate-400 hover:text-purple-300 hover:bg-white/[0.05] flex items-center justify-center transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>

@@ -53,7 +53,7 @@ function LoginForm() {
   return (
     <div className="min-h-screen bg-[#06070a] text-slate-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Lighting Meshes */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-gradient-to-tr from-violet-600/15 via-indigo-600/10 to-cyan-500/10 blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[550px] h-[350px] bg-gradient-to-tr from-violet-600/15 via-indigo-600/10 to-cyan-500/10 blur-[130px] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
         <div className="flex justify-center mb-6">
@@ -68,7 +68,7 @@ function LoginForm() {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
-        <div className="glass-panel p-8 sm:rounded-2xl relative shadow-2xl">
+        <div className="glass-panel p-5 sm:p-8 rounded-2xl relative shadow-2xl">
           {message && (
             <div className="mb-5 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 shrink-0" />

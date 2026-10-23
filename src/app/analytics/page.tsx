@@ -111,18 +111,18 @@ export default function AnalyticsPage() {
     <AppShell onVideoAdded={() => loadVideos()}>
       <div className="space-y-8 text-left">
         {/* Page Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 sm:p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-purple-400">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-purple-400">
                 Catalog Intelligence
               </span>
               <span className="text-[10px] text-slate-500">•</span>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-[11px] sm:text-xs text-slate-400 font-mono">
                 {videos.length} videos recorded
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white mt-1">
               Video Analytics & Datasets
             </h1>
             <p className="text-xs sm:text-sm text-slate-400">
@@ -130,10 +130,10 @@ export default function AnalyticsPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <button
               onClick={() => setIsCsvModalOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] text-slate-200 hover:text-white transition-all"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] text-slate-200 hover:text-white transition-all cursor-pointer"
             >
               <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
               <span>Import CSV</span>
@@ -144,7 +144,7 @@ export default function AnalyticsPage() {
                 setEditingVideo(null);
                 setIsVideoModalOpen(true);
               }}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 transition-all"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add Video</span>
@@ -156,21 +156,21 @@ export default function AnalyticsPage() {
         <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2.5">
             <Info className="w-4 h-4 text-purple-400 shrink-0" />
-            <div>
+            <div className="leading-relaxed">
               <span className="font-semibold text-slate-300">Documented Denominator Formula:</span>{' '}
-              <code className="text-purple-300 font-mono px-2 py-0.5 rounded bg-white/[0.04]">
+              <code className="text-purple-300 font-mono px-2 py-0.5 rounded bg-white/[0.04] inline-block mt-0.5 sm:mt-0">
                 ((likes + comments + shares) / views) × 100
               </code>
             </div>
           </div>
-          <div className="flex items-center gap-4 text-slate-400 font-mono text-[11px]">
+          <div className="flex flex-wrap items-center gap-3 text-slate-400 font-mono text-[11px]">
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>{activeSummary.videos_with_complete_engagement} complete metrics</span>
             </span>
             {activeSummary.videos_with_missing_metrics > 0 && (
               <span className="flex items-center gap-1.5 text-amber-400">
-                <AlertCircle className="w-3.5 h-3.5" />
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>{activeSummary.videos_with_missing_metrics} omitted (null preserved)</span>
               </span>
             )}
@@ -208,7 +208,7 @@ export default function AnalyticsPage() {
 
         {/* Filter and Search Bar */}
         <div className="p-4 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-3">
-          <div className="flex flex-col sm:flex-row items-center gap-3">
+          <div className="flex flex-col lg:flex-row items-center gap-3">
             {/* Search Input */}
             <div className="relative flex-1 w-full">
               <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -221,8 +221,8 @@ export default function AnalyticsPage() {
               />
             </div>
 
-            {/* Filter Game: CODM included */}
-            <div className="w-full sm:w-auto">
+            {/* Filter Dropdowns Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 w-full lg:w-auto">
               <select
                 value={selectedGame}
                 onChange={(e) => setSelectedGame(e.target.value)}
@@ -237,10 +237,7 @@ export default function AnalyticsPage() {
                 <option value="GTA V">GTA V</option>
                 <option value="Other">Other</option>
               </select>
-            </div>
 
-            {/* Filter Platform */}
-            <div className="w-full sm:w-auto">
               <select
                 value={selectedPlatform}
                 onChange={(e) => setSelectedPlatform(e.target.value)}
@@ -250,10 +247,7 @@ export default function AnalyticsPage() {
                 <option value="youtube_shorts">YouTube Shorts</option>
                 <option value="instagram_reels">Instagram Reels</option>
               </select>
-            </div>
 
-            {/* Filter Format */}
-            <div className="w-full sm:w-auto">
               <select
                 value={selectedFormat}
                 onChange={(e) => setSelectedFormat(e.target.value)}
@@ -272,36 +266,109 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Video Table */}
-        <div className="p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-4">
-          <div className="flex items-center justify-between text-xs text-slate-400">
+        <div className="p-4 sm:p-6 rounded-2xl bg-[#0d101a] border border-white/[0.08] shadow-xl space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-slate-400">
             <span>
               Showing {filteredVideos.length} of {videos.length} videos
             </span>
-            <div className="flex items-center gap-2">
-              <span className="text-slate-500">Sort by:</span>
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <span className="text-slate-500 text-[11px]">Sort by:</span>
               <button
                 onClick={() => toggleSort('published_at')}
-                className={`px-2.5 py-1 rounded ${sortField === 'published_at' ? 'bg-purple-500/20 text-purple-300 font-bold' : 'hover:text-white'}`}
+                className={`px-2.5 py-1 rounded text-xs ${sortField === 'published_at' ? 'bg-purple-500/20 text-purple-300 font-bold' : 'hover:text-white'}`}
               >
                 Date {sortField === 'published_at' ? (sortDirection === 'desc' ? '↓' : '↑') : ''}
               </button>
               <button
                 onClick={() => toggleSort('views')}
-                className={`px-2.5 py-1 rounded ${sortField === 'views' ? 'bg-purple-500/20 text-purple-300 font-bold' : 'hover:text-white'}`}
+                className={`px-2.5 py-1 rounded text-xs ${sortField === 'views' ? 'bg-purple-500/20 text-purple-300 font-bold' : 'hover:text-white'}`}
               >
                 Views {sortField === 'views' ? (sortDirection === 'desc' ? '↓' : '↑') : ''}
               </button>
               <button
                 onClick={() => toggleSort('engagement')}
-                className={`px-2.5 py-1 rounded ${sortField === 'engagement' ? 'bg-purple-500/20 text-purple-300 font-bold' : 'hover:text-white'}`}
+                className={`px-2.5 py-1 rounded text-xs ${sortField === 'engagement' ? 'bg-purple-500/20 text-purple-300 font-bold' : 'hover:text-white'}`}
               >
                 Engagement {sortField === 'engagement' ? (sortDirection === 'desc' ? '↓' : '↑') : ''}
               </button>
             </div>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-white/[0.08]">
-            <table className="w-full text-left text-xs">
+          {/* Mobile Video Cards (< 640px) */}
+          <div className="sm:hidden space-y-3">
+            {filteredVideos.length === 0 ? (
+              <div className="p-6 text-center text-slate-500 text-xs rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                No videos matched your filter criteria.
+              </div>
+            ) : (
+              filteredVideos.map((v) => {
+                const engRate = calculateEngagementRate(v);
+                return (
+                  <div
+                    key={v.id}
+                    className="p-3.5 rounded-xl bg-[#111522] border border-white/[0.08] space-y-2.5"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="space-y-1 min-w-0">
+                        <h4 className="font-semibold text-xs text-white leading-snug">
+                          {v.title}
+                        </h4>
+                        <div className="flex flex-wrap items-center gap-1.5 text-[10px]">
+                          <GameBadge game={v.game} size="sm" />
+                          <PlatformBadge platform={v.platform} size="sm" />
+                          <span className="px-1.5 py-0.5 rounded bg-white/[0.04] text-slate-300">
+                            {v.content_format.split('/')[0]}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          onClick={() => {
+                            setEditingVideo(v);
+                            setIsVideoModalOpen(true);
+                          }}
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-purple-300 hover:bg-white/[0.06]"
+                          title="Edit Video"
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteVideo(v.id)}
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-white/[0.06]"
+                          title="Delete Video"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2 p-2 rounded-lg bg-black/30 border border-white/[0.04] text-center font-mono text-[11px]">
+                      <div>
+                        <span className="text-[9px] text-slate-500 uppercase block">Views</span>
+                        <span className="font-bold text-purple-300">{formatNumber(v.views)}</span>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-500 uppercase block">Eng. Rate</span>
+                        {engRate !== null ? (
+                          <span className="font-bold text-emerald-400">{formatPercent(engRate)}</span>
+                        ) : (
+                          <span className="text-slate-500 italic text-[10px]">Omitted</span>
+                        )}
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-500 uppercase block">Published</span>
+                        <span className="text-slate-300 text-[10px]">{formatDate(v.published_at)}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {/* Desktop & Tablet Table (>= 640px) */}
+          <div className="hidden sm:block overflow-x-auto rounded-xl border border-white/[0.08]">
+            <table className="w-full text-left text-xs min-w-[780px]">
               <thead className="bg-[#090b12] text-slate-400 border-b border-white/[0.08]">
                 <tr>
                   <th className="p-3">Title</th>
